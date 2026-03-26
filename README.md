@@ -14,7 +14,7 @@ Send SMS notifications to students and administrators via the kwtSMS gateway (kw
 
 ## Requirements
 
-- Moodle 4.4 or later
+- Moodle 4.3 or later
 - PHP 8.1 or later
 - A kwtSMS account (sign up at https://www.kwtsms.com)
 
