@@ -1,0 +1,135 @@
+/* kwtSMS plugin styles */
+
+/* Dashboard cards */
+.kwtsms-dashboard .card {
+    margin-bottom: 1rem;
+}
+
+.kwtsms-dashboard .card-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.kwtsms-dashboard .card-body .h2 {
+    font-weight: 700;
+}
+
+/* Gateway status indicators */
+.kwtsms-status-connected {
+    color: #28a745;
+}
+
+.kwtsms-status-disconnected {
+    color: #dc3545;
+}
+
+/* Template edit area */
+.kwtsms-template-edit textarea {
+    min-height: 80px;
+    font-size: 0.9rem;
+}
+
+.kwtsms-template-edit .kwtsms-char-count {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Logs table */
+.kwtsms-logs-table .badge {
+    font-size: 0.75rem;
+}
+
+/* Status badges */
+.kwtsms-badge-sent {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.kwtsms-badge-failed {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.kwtsms-badge-skipped {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.kwtsms-badge-queued {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+/* Phone masking */
+.kwtsms-phone-masked {
+    font-family: monospace;
+    letter-spacing: 0.05em;
+}
+
+/* Coverage badges */
+.kwtsms-coverage-badge {
+    display: inline-block;
+    padding: 0.2em 0.5em;
+    margin: 0.1em;
+    font-size: 0.8rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+/* Help page */
+.kwtsms-help .card {
+    margin-bottom: 1.5rem;
+}
+
+/* Placeholder badges in template editor */
+.kwtsms-placeholder-badge {
+    display: inline-block;
+    padding: 0.15em 0.4em;
+    margin: 0.1em;
+    font-size: 0.8rem;
+    font-family: monospace;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 0.2rem;
+    cursor: default;
+}
+
+/* Feedback messages */
+.kwtsms-feedback .alert {
+    margin-top: 0.5rem;
+}
+
+/* RTL adjustments */
+[dir="rtl"] .kwtsms-template-edit textarea {
+    direction: rtl;
+    text-align: right;
+}
+
+[dir="rtl"] .kwtsms-logs-table {
+    direction: rtl;
+}
+
+[dir="rtl"] .form-group .col-form-label {
+    text-align: right;
+}
+
+/* Branding accent on active tab */
+.nav-tabs .nav-link.active {
+    border-bottom-color: #FFA200;
+}
+
+/* Log detail rows */
+.kwtsms-log-detail {
+    background-color: #f8f9fa;
+}
+
+.kwtsms-log-detail pre {
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 0.8rem;
+    background-color: #fff;
+    padding: 0.5rem;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+}
