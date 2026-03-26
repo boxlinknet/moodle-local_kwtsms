@@ -1,6 +1,7 @@
-# Testing
+# Testing (top-level only, not plugin tests)
 tests/
 test/
+!local/kwtsms/tests/
 
 # Documentation (local only)
 docs/
