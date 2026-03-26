@@ -1,0 +1,35 @@
+# Testing
+tests/
+test/
+
+# Documentation (local only)
+docs/
+.claude/
+CLAUDE.md
+napkin.md
+
+# IDE and tools
+.idea/
+.vscode/
+.worktrees/
+.superpowers/
+.playwright*
+docker/
+
+# Environment
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Composer (dev only, library is bundled)
+vendor/
+composer.lock
+
+# Moodle AMD build artifacts
+local/kwtsms/amd/build/
+
+# Remember
+.remember/
