@@ -345,13 +345,14 @@ class api_client {
             return [];
         }
 
-        // The coverage response has 'result' => 'OK' plus country code keys.
-        // Extract all keys that are numeric (country code prefixes).
+        // The coverage response may have a 'prefixes' array or numeric keys.
+        if (isset($data['prefixes']) && is_array($data['prefixes'])) {
+            return array_map('strval', $data['prefixes']);
+        }
+
+        // Fallback: extract numeric keys (legacy format).
         $prefixes = [];
         foreach ($data as $key => $value) {
-            if ($key === 'result' || $key === 'code' || $key === 'description' || $key === 'action') {
-                continue;
-            }
             if (is_numeric($key)) {
                 $prefixes[] = (string) $key;
             }
