@@ -30,7 +30,6 @@ For more integrations, visit the [kwtSMS Integrations page](https://www.kwtsms.c
 - **Gateway management:** Login/logout, balance monitoring, sender ID selection, country code configuration
 - **SMS logging:** Full log with status tracking, phone masking, filtering, pagination, and CSV export
 - **Daily sync:** Automatic refresh of balance, sender IDs, and coverage data
-- **GDPR compliant:** Full Privacy API implementation with data export and deletion
 - **RTL support:** Right-to-left layout support for Arabic interfaces
 - **Test mode:** Send to API without delivery for development and testing
 
