@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && confirm_sesskey()) {
     set_config('debug_logging', optional_param('debug_logging', 0, PARAM_INT), 'local_kwtsms');
     set_config('default_language', optional_param('default_language', 'en', PARAM_ALPHA), 'local_kwtsms');
     set_config('admin_phones', optional_param('admin_phones', '', PARAM_TEXT), 'local_kwtsms');
-    set_config('low_balance_threshold', optional_param('low_balance_threshold', 0, PARAM_INT), 'local_kwtsms');
+    set_config('low_balance_threshold', max(0, optional_param('low_balance_threshold', 0, PARAM_INT)), 'local_kwtsms');
 
     echo $OUTPUT->notification(get_string('settings_saved', 'local_kwtsms'), 'success');
 }
