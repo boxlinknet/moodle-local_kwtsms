@@ -1,5 +1,11 @@
 # kwtSMS for Moodle
 
+[![Moodle Plugin](https://img.shields.io/badge/Moodle-4.3+-orange.svg)](https://moodle.org)
+[![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4.svg)](https://www.php.net)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![GitHub issues](https://img.shields.io/github/issues/boxlinknet/kwtsms-moodle)](https://github.com/boxlinknet/kwtsms-moodle/issues)
+[![GitHub release](https://img.shields.io/github/v/release/boxlinknet/kwtsms-moodle?include_prereleases)](https://github.com/boxlinknet/kwtsms-moodle/releases)
+
 Send SMS notifications to students and administrators via the kwtSMS gateway (kwtsms.com).
 
 ## Features
