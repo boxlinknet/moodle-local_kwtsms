@@ -19,7 +19,7 @@
  * Handles clear logs, view details toggle, and CSV export.
  *
  * @module     local_kwtsms/logs
- * @package    local_kwtsms
+ * @package
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

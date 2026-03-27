@@ -36,7 +36,6 @@ namespace local_kwtsms;
  * 12-step validation pipeline.
  */
 class manager {
-
     /**
      * Send a notification for a specific event type to a user or admin phones.
      *

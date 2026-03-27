@@ -21,6 +21,8 @@
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable moodle.Commenting.MissingDocblock.File
+// phpcs:disable moodle.Commenting.FileExpectedTags
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -46,7 +48,7 @@ $isconnected = api_client::is_configured();
 
 <div id="kwtsms-gateway-feedback"></div>
 
-<?php if ($isconnected): ?>
+<?php if ($isconnected) : ?>
     <?php
     $username = get_config('local_kwtsms', 'api_username');
     $balance = api_client::get_cached_balance();
@@ -87,18 +89,18 @@ $isconnected = api_client::is_configured();
                 <label for="id_sender_id"><?php echo get_string('sender_id', 'local_kwtsms'); ?></label>
             </div>
             <div class="col-sm-9">
-                <?php if (!empty($senderids)): ?>
+                <?php if (!empty($senderids)) : ?>
                     <select name="sender_id" id="id_sender_id" class="form-control custom-select"
                             onchange="this.form.submit();">
                         <option value=""><?php echo get_string('no_senderids', 'local_kwtsms'); ?></option>
-                        <?php foreach ($senderids as $sid): ?>
+                        <?php foreach ($senderids as $sid) : ?>
                             <option value="<?php echo s($sid); ?>"
                                 <?php echo ($sid === $currentsenderid) ? 'selected' : ''; ?>>
                                 <?php echo s($sid); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                <?php else: ?>
+                <?php else : ?>
                     <p class="form-control-static text-muted">
                         <?php echo get_string('no_senderids', 'local_kwtsms'); ?>
                     </p>
@@ -118,11 +120,11 @@ $isconnected = api_client::is_configured();
                 </label>
             </div>
             <div class="col-sm-9">
-                <?php if (!empty($coverage)): ?>
+                <?php if (!empty($coverage)) : ?>
                     <select name="default_country_code" id="id_default_country_code"
                             class="form-control custom-select" onchange="this.form.submit();">
                         <option value="">--</option>
-                        <?php foreach ($coverage as $cc): ?>
+                        <?php foreach ($coverage as $cc) : ?>
                             <option value="<?php echo s($cc); ?>"
                                 <?php echo ($cc === $currentcc) ? 'selected' : ''; ?>>
                                 +<?php echo s($cc); ?>
@@ -132,14 +134,14 @@ $isconnected = api_client::is_configured();
                     <small class="form-text text-muted">
                         <?php echo get_string('default_country_code_desc', 'local_kwtsms'); ?>
                     </small>
-                <?php else: ?>
+                <?php else : ?>
                     <p class="form-control-static text-muted">--</p>
                 <?php endif; ?>
             </div>
         </div>
     </form>
 
-    <?php if (!empty($coverage)): ?>
+    <?php if (!empty($coverage)) : ?>
         <div class="form-group row mb-3">
             <div class="col-sm-3">
                 <strong><?php echo get_string('active_coverage', 'local_kwtsms'); ?></strong>
@@ -167,8 +169,7 @@ $isconnected = api_client::is_configured();
         </div>
     </div>
 
-<?php else: ?>
-
+<?php else : ?>
     <h3><?php echo get_string('gateway_settings', 'local_kwtsms'); ?></h3>
 
     <form id="kwtsms-login-form" class="mform">

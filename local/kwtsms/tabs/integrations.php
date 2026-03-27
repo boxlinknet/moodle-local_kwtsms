@@ -24,6 +24,8 @@
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable moodle.Commenting.MissingDocblock.File
+// phpcs:disable moodle.Commenting.FileExpectedTags
 
 defined('MOODLE_INTERNAL') || die();
 

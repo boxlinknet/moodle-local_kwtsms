@@ -30,31 +30,30 @@ namespace local_kwtsms;
  * @package    local_kwtsms
  */
 class message_utils {
-
     /**
      * Arabic-Indic and Extended Arabic-Indic digit mapping to Latin digits.
      */
     private const ARABIC_DIGITS = [
-        "\xD9\xA0" => '0', // ٠
-        "\xD9\xA1" => '1', // ١
-        "\xD9\xA2" => '2', // ٢
-        "\xD9\xA3" => '3', // ٣
-        "\xD9\xA4" => '4', // ٤
-        "\xD9\xA5" => '5', // ٥
-        "\xD9\xA6" => '6', // ٦
-        "\xD9\xA7" => '7', // ٧
-        "\xD9\xA8" => '8', // ٨
-        "\xD9\xA9" => '9', // ٩
-        "\xDB\xB0" => '0', // ۰
-        "\xDB\xB1" => '1', // ۱
-        "\xDB\xB2" => '2', // ۲
-        "\xDB\xB3" => '3', // ۳
-        "\xDB\xB4" => '4', // ۴
-        "\xDB\xB5" => '5', // ۵
-        "\xDB\xB6" => '6', // ۶
-        "\xDB\xB7" => '7', // ۷
-        "\xDB\xB8" => '8', // ۸
-        "\xDB\xB9" => '9', // ۹
+        "\xD9\xA0" => '0', // Arabic-Indic digit zero (U+0660).
+        "\xD9\xA1" => '1', // Arabic-Indic digit one (U+0661).
+        "\xD9\xA2" => '2', // Arabic-Indic digit two (U+0662).
+        "\xD9\xA3" => '3', // Arabic-Indic digit three (U+0663).
+        "\xD9\xA4" => '4', // Arabic-Indic digit four (U+0664).
+        "\xD9\xA5" => '5', // Arabic-Indic digit five (U+0665).
+        "\xD9\xA6" => '6', // Arabic-Indic digit six (U+0666).
+        "\xD9\xA7" => '7', // Arabic-Indic digit seven (U+0667).
+        "\xD9\xA8" => '8', // Arabic-Indic digit eight (U+0668).
+        "\xD9\xA9" => '9', // Arabic-Indic digit nine (U+0669).
+        "\xDB\xB0" => '0', // Extended Arabic-Indic digit zero (U+06F0).
+        "\xDB\xB1" => '1', // Extended Arabic-Indic digit one (U+06F1).
+        "\xDB\xB2" => '2', // Extended Arabic-Indic digit two (U+06F2).
+        "\xDB\xB3" => '3', // Extended Arabic-Indic digit three (U+06F3).
+        "\xDB\xB4" => '4', // Extended Arabic-Indic digit four (U+06F4).
+        "\xDB\xB5" => '5', // Extended Arabic-Indic digit five (U+06F5).
+        "\xDB\xB6" => '6', // Extended Arabic-Indic digit six (U+06F6).
+        "\xDB\xB7" => '7', // Extended Arabic-Indic digit seven (U+06F7).
+        "\xDB\xB8" => '8', // Extended Arabic-Indic digit eight (U+06F8).
+        "\xDB\xB9" => '9', // Extended Arabic-Indic digit nine (U+06F9).
     ];
 
     /**
@@ -74,18 +73,18 @@ class message_utils {
      * U+2064  Invisible plus
      */
     private const HIDDEN_CHARS = [
-        "\xE2\x80\x8B" => '', // U+200B
-        "\xE2\x80\x8C" => '', // U+200C
-        "\xE2\x80\x8D" => '', // U+200D
-        "\xE2\x80\x8E" => '', // U+200E
-        "\xE2\x80\x8F" => '', // U+200F
-        "\xEF\xBB\xBF" => '', // U+FEFF
-        "\xC2\xAD"     => '', // U+00AD
-        "\xE2\x81\xA0" => '', // U+2060
-        "\xE2\x81\xA1" => '', // U+2061
-        "\xE2\x81\xA2" => '', // U+2062
-        "\xE2\x81\xA3" => '', // U+2063
-        "\xE2\x81\xA4" => '', // U+2064
+        "\xE2\x80\x8B" => '', // Zero-width space (U+200B).
+        "\xE2\x80\x8C" => '', // Zero-width non-joiner (U+200C).
+        "\xE2\x80\x8D" => '', // Zero-width joiner (U+200D).
+        "\xE2\x80\x8E" => '', // Left-to-right mark (U+200E).
+        "\xE2\x80\x8F" => '', // Right-to-left mark (U+200F).
+        "\xEF\xBB\xBF" => '', // Byte order mark (U+FEFF).
+        "\xC2\xAD"     => '', // Soft hyphen (U+00AD).
+        "\xE2\x81\xA0" => '', // Word joiner (U+2060).
+        "\xE2\x81\xA1" => '', // Function application (U+2061).
+        "\xE2\x81\xA2" => '', // Invisible times (U+2062).
+        "\xE2\x81\xA3" => '', // Invisible separator (U+2063).
+        "\xE2\x81\xA4" => '', // Invisible plus (U+2064).
     ];
 
     /**

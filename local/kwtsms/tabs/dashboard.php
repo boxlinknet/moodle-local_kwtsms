@@ -24,6 +24,8 @@
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable moodle.Commenting.MissingDocblock.File
+// phpcs:disable moodle.Commenting.FileExpectedTags
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -130,7 +132,10 @@ $recentlogs = $DB->get_records_sql(
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title"><?php echo get_string('balance', 'local_kwtsms'); ?></h5>
-                <p class="h3 mb-1"><?php echo (int) $balance; ?> <small class="text-muted"><?php echo get_string('credits', 'local_kwtsms'); ?></small></p>
+                <p class="h3 mb-1">
+                    <?php echo (int) $balance; ?>
+                    <small class="text-muted"><?php echo get_string('credits', 'local_kwtsms'); ?></small>
+                </p>
                 <p class="text-muted mb-0">
                     <small><?php echo get_string('last_synced', 'local_kwtsms'); ?>: <?php echo s($lastsynced); ?></small>
                 </p>
@@ -156,10 +161,22 @@ $recentlogs = $DB->get_records_sql(
             <div class="card-body">
                 <h5 class="card-title"><?php echo get_string('send_statistics', 'local_kwtsms'); ?></h5>
                 <ul class="list-unstyled mb-0">
-                    <li><?php echo get_string('sent_today', 'local_kwtsms'); ?>: <strong><?php echo (int) $senttoday; ?></strong></li>
-                    <li><?php echo get_string('sent_week', 'local_kwtsms'); ?>: <strong><?php echo (int) $sentweek; ?></strong></li>
-                    <li><?php echo get_string('sent_month', 'local_kwtsms'); ?>: <strong><?php echo (int) $sentmonth; ?></strong></li>
-                    <li><?php echo get_string('failed_count', 'local_kwtsms'); ?>: <strong class="text-danger"><?php echo (int) $failedmonth; ?></strong></li>
+                    <li>
+                        <?php echo get_string('sent_today', 'local_kwtsms'); ?>:
+                        <strong><?php echo (int) $senttoday; ?></strong>
+                    </li>
+                    <li>
+                        <?php echo get_string('sent_week', 'local_kwtsms'); ?>:
+                        <strong><?php echo (int) $sentweek; ?></strong>
+                    </li>
+                    <li>
+                        <?php echo get_string('sent_month', 'local_kwtsms'); ?>:
+                        <strong><?php echo (int) $sentmonth; ?></strong>
+                    </li>
+                    <li>
+                        <?php echo get_string('failed_count', 'local_kwtsms'); ?>:
+                        <strong class="text-danger"><?php echo (int) $failedmonth; ?></strong>
+                    </li>
                 </ul>
             </div>
         </div>

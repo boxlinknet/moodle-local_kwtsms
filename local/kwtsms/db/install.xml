@@ -8,11 +8,11 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" COMMENT="Moodle user ID, 0 for admin-initiated"/>
-        <FIELD NAME="recipient_phone" TYPE="char" LENGTH="30" NOTNULL="true" DEFAULT=""/>
+        <FIELD NAME="recipient_phone" TYPE="char" LENGTH="30" NOTNULL="true"/>
         <FIELD NAME="message" TYPE="text" NOTNULL="true"/>
         <FIELD NAME="template_id" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"/>
-        <FIELD NAME="event_type" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT=""/>
-        <FIELD NAME="sender_id" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT=""/>
+        <FIELD NAME="event_type" TYPE="char" LENGTH="100" NOTNULL="true"/>
+        <FIELD NAME="sender_id" TYPE="char" LENGTH="20" NOTNULL="true"/>
         <FIELD NAME="status" TYPE="char" LENGTH="20" NOTNULL="true" DEFAULT="pending" COMMENT="sent, failed, skipped, queued"/>
         <FIELD NAME="skip_reason" TYPE="char" LENGTH="50" NOTNULL="false" COMMENT="Reason if skipped, null otherwise"/>
         <FIELD NAME="api_response" TYPE="text" NOTNULL="false" COMMENT="Full JSON API response, credentials stripped"/>
@@ -35,7 +35,7 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="event_type" TYPE="char" LENGTH="100" NOTNULL="true"/>
-        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true" DEFAULT=""/>
+        <FIELD NAME="name" TYPE="char" LENGTH="100" NOTNULL="true"/>
         <FIELD NAME="message_en" TYPE="text" NOTNULL="true"/>
         <FIELD NAME="message_ar" TYPE="text" NOTNULL="true"/>
         <FIELD NAME="default_en" TYPE="text" NOTNULL="true"/>

@@ -29,8 +29,7 @@ Thumbs.db
 vendor/
 composer.lock
 
-# Moodle AMD build artifacts
-local/kwtsms/amd/build/
+# Moodle AMD build artifacts are committed (required for production)
 
 # Remember
 .remember/

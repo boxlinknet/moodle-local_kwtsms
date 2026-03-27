@@ -19,7 +19,7 @@
  * Handles inline editing, AJAX save/reset, and character counting.
  *
  * @module     local_kwtsms/templates
- * @package    local_kwtsms
+ * @package
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

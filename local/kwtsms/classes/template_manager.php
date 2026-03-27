@@ -31,7 +31,6 @@ namespace local_kwtsms;
  * Manages SMS templates, placeholder substitution, and bilingual message rendering.
  */
 class template_manager {
-
     /**
      * Maps event types to their available placeholder names.
      * The '_common' key holds placeholders shared across all events.

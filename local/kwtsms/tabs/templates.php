@@ -23,6 +23,8 @@
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable moodle.Commenting.MissingDocblock.File
+// phpcs:disable moodle.Commenting.FileExpectedTags
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -59,10 +61,10 @@ $recipientlabels = [
                 $maxdisplay = 80;
                 $messageen = $template->message_en;
                 $messagear = $template->message_ar;
-                $messageenShort = (mb_strlen($messageen) > $maxdisplay)
+                $messageenshort = (mb_strlen($messageen) > $maxdisplay)
                     ? mb_substr($messageen, 0, $maxdisplay) . '...'
                     : $messageen;
-                $messagearShort = (mb_strlen($messagear) > $maxdisplay)
+                $messagearshort = (mb_strlen($messagear) > $maxdisplay)
                     ? mb_substr($messagear, 0, $maxdisplay) . '...'
                     : $messagear;
             ?>
@@ -76,10 +78,10 @@ $recipientlabels = [
                     <span class="badge badge-secondary"><?php echo $recipientlabel; ?></span>
                 </td>
                 <td class="kwtsms-msg-en-display">
-                    <?php echo s($messageenShort); ?>
+                    <?php echo s($messageenshort); ?>
                 </td>
                 <td class="kwtsms-msg-ar-display" dir="rtl">
-                    <?php echo s($messagearShort); ?>
+                    <?php echo s($messagearshort); ?>
                 </td>
                 <td>
                     <?php foreach ($placeholders as $ph) : ?>

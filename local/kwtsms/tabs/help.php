@@ -21,6 +21,8 @@
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+// phpcs:disable moodle.Commenting.MissingDocblock.File
+// phpcs:disable moodle.Commenting.FileExpectedTags
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -52,11 +54,13 @@ use local_kwtsms\template_manager;
         <ol>
             <li>
                 <strong><?php echo get_string('tab_gateway', 'local_kwtsms'); ?>:</strong>
-                Enter your kwtSMS API username and password, then click Login. Once connected, select your Sender ID and default country code.
+                Enter your kwtSMS API username and password, then click Login. Once connected,
+                select your Sender ID and default country code.
             </li>
             <li>
                 <strong><?php echo get_string('tab_settings', 'local_kwtsms'); ?>:</strong>
-                Enable the gateway, choose your default SMS language, configure admin phone numbers, and set the low balance threshold.
+                Enable the gateway, choose your default SMS language, configure admin phone numbers,
+                and set the low balance threshold.
             </li>
             <li>
                 <strong><?php echo get_string('tab_integrations', 'local_kwtsms'); ?>:</strong>
@@ -141,7 +145,7 @@ use local_kwtsms\template_manager;
                 ];
                 foreach ($events as $event) {
                     $placeholders = template_manager::get_placeholders_for_event($event);
-                    $placeholderlist = implode(', ', array_map(function($p) {
+                    $placeholderlist = implode(', ', array_map(function ($p) {
                         return '<code>{' . s($p) . '}</code>';
                     }, $placeholders));
                     $eventlabel = get_string('event_' . $event, 'local_kwtsms');
@@ -166,7 +170,10 @@ use local_kwtsms\template_manager;
     <div class="card-body">
         <p><?php echo get_string('help_phone_format_text', 'local_kwtsms'); ?></p>
         <ul>
-            <li><strong>International format:</strong> Use the full number including country code, e.g. <code>96598765432</code> for a Kuwait mobile number.</li>
+            <li>
+                <strong>International format:</strong> Use the full number including country code,
+                e.g. <code>96598765432</code> for a Kuwait mobile number.
+            </li>
             <li><strong>Local number conversion:</strong> If a user's phone number starts with
             <code>0</code>, the plugin will automatically strip the leading zero and prepend the
             default country code configured in the Gateway tab.</li>
@@ -175,7 +182,8 @@ use local_kwtsms\template_manager;
             (<code>0123456789</code>) before processing.</li>
         </ul>
         <div class="alert alert-warning">
-            Make sure the user's phone number field in their Moodle profile is filled in correctly. Users without a phone number will be skipped (logged as "No phone number").
+            Make sure the user's phone number field in their Moodle profile is filled in correctly.
+            Users without a phone number will be skipped (logged as "No phone number").
         </div>
     </div>
 </div>
@@ -192,7 +200,10 @@ use local_kwtsms\template_manager;
             If it shows "Failed" or "Skipped", the reason column will explain why.</li>
             <li><strong>Test Mode enabled:</strong> When test mode is on, messages are sent to
             the API but not delivered to handsets. Disable test mode in Settings for production use.</li>
-            <li><strong>Check the kwtSMS queue:</strong> Log in to your kwtSMS account and check the message archive/queue for delivery status.</li>
+            <li>
+                <strong>Check the kwtSMS queue:</strong> Log in to your kwtSMS account and check
+                the message archive/queue for delivery status.
+            </li>
             <li><strong>Gateway disabled:</strong> Verify that the gateway is enabled in the Settings tab.</li>
         </ul>
 
@@ -206,7 +217,10 @@ use local_kwtsms\template_manager;
         <h5>Wrong Sender ID</h5>
         <ul>
             <li>The sender ID displayed on the recipient's phone is controlled by the Sender ID selected in the Gateway tab.</li>
-            <li><code>KWT-SMS</code> is the shared test sender ID. For production, register a private sender ID through your kwtSMS account.</li>
+            <li>
+                <code>KWT-SMS</code> is the shared test sender ID. For production, register a
+                private sender ID through your kwtSMS account.
+            </li>
         </ul>
 
         <h5>Country not covered</h5>

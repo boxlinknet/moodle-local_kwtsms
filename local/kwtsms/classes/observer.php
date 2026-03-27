@@ -30,7 +30,6 @@ namespace local_kwtsms;
  * Observer class that handles Moodle events and dispatches SMS notifications.
  */
 class observer {
-
     /**
      * Handle user enrolment created event.
      *

@@ -27,10 +27,12 @@
 
 namespace local_kwtsms;
 
+// @codingStandardsIgnoreStart
 require_once(__DIR__ . '/../lib/kwtsms/KwtSMS.php');
 require_once(__DIR__ . '/../lib/kwtsms/PhoneUtils.php');
 require_once(__DIR__ . '/../lib/kwtsms/MessageUtils.php');
 require_once(__DIR__ . '/../lib/kwtsms/ApiErrors.php');
+// @codingStandardsIgnoreEnd
 
 /**
  * Moodle-aware wrapper around the kwtsms-php library.
@@ -40,7 +42,6 @@ require_once(__DIR__ . '/../lib/kwtsms/ApiErrors.php');
  * local_kwtsms_cache table.
  */
 class api_client {
-
     /** @var \KwtSMS\KwtSMS|null Cached client singleton. */
     private static $client = null;
 

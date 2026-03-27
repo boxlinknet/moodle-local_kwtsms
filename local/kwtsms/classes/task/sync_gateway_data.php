@@ -35,7 +35,6 @@ use local_kwtsms\manager;
  * Scheduled task that syncs gateway data and sends low balance alerts.
  */
 class sync_gateway_data extends \core\task\scheduled_task {
-
     /**
      * Return the task name as shown in admin screens.
      *

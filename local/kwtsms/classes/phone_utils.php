@@ -28,7 +28,6 @@ namespace local_kwtsms;
  * Utility class for phone number normalization, validation, and filtering.
  */
 class phone_utils {
-
     /**
      * Map of Arabic-Indic and Extended Arabic-Indic digits to Latin digits.
      */
