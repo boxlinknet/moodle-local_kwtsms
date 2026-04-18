@@ -168,26 +168,27 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
      * @param {number} id
      */
     function resetTemplate(id) {
-        Str.get_string('template_reset_confirm', 'local_kwtsms').done(function(msg) {
-            if (!window.confirm(msg)) {
-                return;
+        Notification.saveCancel(
+            Str.get_string('template_reset', 'local_kwtsms'),
+            Str.get_string('template_reset_confirm', 'local_kwtsms'),
+            Str.get_string('yes'),
+            function() {
+                var request = Ajax.call([{
+                    methodname: 'local_kwtsms_template_reset',
+                    args: {id: id}
+                }])[0];
+
+                request.done(function(response) {
+                    if (response.success) {
+                        window.location.reload();
+                    } else {
+                        Str.get_string('template_reset_failed', 'local_kwtsms').done(function(fail) {
+                            Notification.alert('', fail, '');
+                        }).fail(Notification.exception);
+                    }
+                }).fail(Notification.exception);
             }
-
-            var request = Ajax.call([{
-                methodname: 'local_kwtsms_template_reset',
-                args: {id: id}
-            }])[0];
-
-            request.done(function(response) {
-                if (response.success) {
-                    window.location.reload();
-                } else {
-                    Str.get_string('template_reset_failed', 'local_kwtsms').done(function(fail) {
-                        Notification.alert('', fail, '');
-                    }).fail(Notification.exception);
-                }
-            }).fail(Notification.exception);
-        }).fail(Notification.exception);
+        );
     }
 
     return {

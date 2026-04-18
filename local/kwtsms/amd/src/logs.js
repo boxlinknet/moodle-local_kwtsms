@@ -51,19 +51,19 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
         var dateTo = $('#filter_date_to').val();
 
         if (status) {
-            params.filter_status = status;
+            params['filter_status'] = status;
         }
         if (event) {
-            params.filter_event = event;
+            params['filter_event'] = event;
         }
         if (search) {
-            params.filter_search = search;
+            params['filter_search'] = search;
         }
         if (dateFrom) {
-            params.filter_date_from = dateFrom;
+            params['filter_date_from'] = dateFrom;
         }
         if (dateTo) {
-            params.filter_date_to = dateTo;
+            params['filter_date_to'] = dateTo;
         }
         return params;
     }
@@ -100,42 +100,43 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
                 var dateTo = $('#filter_date_to').val();
                 var $btn = $(this);
 
-                Str.get_string('log_clear_confirm', 'local_kwtsms').done(function(msg) {
-                    if (!window.confirm(msg)) {
-                        return;
-                    }
+                Notification.saveCancel(
+                    Str.get_string('log_clear', 'local_kwtsms'),
+                    Str.get_string('log_clear_confirm', 'local_kwtsms'),
+                    Str.get_string('yes'),
+                    function() {
+                        $btn.prop('disabled', true);
 
-                    $btn.prop('disabled', true);
-
-                    var args = {
-                        datefrom: 0,
-                        dateto: 0
-                    };
-                    if (dateFrom) {
-                        args.datefrom = Math.floor(new Date(dateFrom + 'T00:00:00').getTime() / 1000);
-                    }
-                    if (dateTo) {
-                        args.dateto = Math.floor(new Date(dateTo + 'T23:59:59').getTime() / 1000);
-                    }
-
-                    var request = Ajax.call([{
-                        methodname: 'local_kwtsms_logs_clear',
-                        args: args
-                    }])[0];
-
-                    request.done(function(result) {
-                        if (result.success) {
-                            window.location.reload();
-                        } else {
-                            $btn.prop('disabled', false);
+                        var args = {
+                            datefrom: 0,
+                            dateto: 0
+                        };
+                        if (dateFrom) {
+                            args.datefrom = Math.floor(new Date(dateFrom + 'T00:00:00').getTime() / 1000);
                         }
-                    }).fail(function() {
-                        Str.get_string('error_request_failed', 'local_kwtsms').done(function(errmsg) {
-                            showFeedback(errmsg, 'danger');
-                        }).fail(Notification.exception);
-                        $btn.prop('disabled', false);
-                    });
-                }).fail(Notification.exception);
+                        if (dateTo) {
+                            args.dateto = Math.floor(new Date(dateTo + 'T23:59:59').getTime() / 1000);
+                        }
+
+                        var request = Ajax.call([{
+                            methodname: 'local_kwtsms_logs_clear',
+                            args: args
+                        }])[0];
+
+                        request.done(function(result) {
+                            if (result.success) {
+                                window.location.reload();
+                            } else {
+                                $btn.prop('disabled', false);
+                            }
+                        }).fail(function() {
+                            Str.get_string('error_request_failed', 'local_kwtsms').done(function(errmsg) {
+                                showFeedback(errmsg, 'danger');
+                            }).fail(Notification.exception);
+                            $btn.prop('disabled', false);
+                        });
+                    }
+                );
             });
 
             $('#kwtsms-export-logs-btn').on('click', function() {
