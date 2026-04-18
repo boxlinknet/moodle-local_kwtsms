@@ -66,7 +66,7 @@ $tabfile = __DIR__ . '/tabs/' . $tab . '.php';
 if (file_exists($tabfile)) {
     require_once($tabfile);
 } else {
-    echo $OUTPUT->notification('Tab not found.', 'error');
+    echo $OUTPUT->notification(get_string('error_tab_not_found', 'local_kwtsms'), 'error');
 }
 
 echo $OUTPUT->footer();

@@ -32,8 +32,7 @@ namespace local_kwtsms;
  *
  * @covers \local_kwtsms\api_client
  */
-class api_client_test extends \advanced_testcase {
-
+final class api_client_test extends \advanced_testcase {
     /**
      * Set up each test with a fresh Moodle state.
      */

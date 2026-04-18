@@ -1,0 +1,160 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_kwtsms/gateway
+
+    Gateway connection tab: login form or connected status with sender ID
+    and country code selection.
+
+    Context variables required for this template:
+    * isconnected bool
+    * username string
+    * balance int
+    * formaction string
+    * sesskey string
+    * hassenderids bool
+    * senderids array [{value, selected}]
+    * hascoverage bool
+    * coverage array [{value, selected}]
+    * coveragebadges array [{value}]
+
+    Example context (json):
+    {
+        "isconnected": true,
+        "username": "user@example.com",
+        "balance": 1000,
+        "formaction": "/local/kwtsms/view.php?tab=gateway",
+        "sesskey": "abc",
+        "hassenderids": true,
+        "senderids": [{"value":"KWT-SMS","selected":true}],
+        "hascoverage": true,
+        "coverage": [{"value":"965","selected":true}],
+        "coveragebadges": [{"value":"965"},{"value":"971"}]
+    }
+}}
+<div id="kwtsms-gateway-feedback"></div>
+
+{{#isconnected}}
+    <h3>{{#str}}gateway_settings, local_kwtsms{{/str}}</h3>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3"><strong>{{#str}}gateway_status, local_kwtsms{{/str}}</strong></div>
+        <div class="col-sm-9">
+            <span class="badge badge-success">{{#str}}connected, local_kwtsms{{/str}}</span>
+            {{#str}}connected_as, local_kwtsms, {{username}}{{/str}}
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3"><strong>{{#str}}balance, local_kwtsms{{/str}}</strong></div>
+        <div class="col-sm-9">{{balance}} {{#str}}credits, local_kwtsms{{/str}}</div>
+    </div>
+
+    <form method="post" action="{{formaction}}" class="mform">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="gateway_action" value="savesenderid">
+
+        <div class="form-group row mb-3">
+            <div class="col-sm-3">
+                <label for="id_sender_id">{{#str}}sender_id, local_kwtsms{{/str}}</label>
+            </div>
+            <div class="col-sm-9">
+                {{#hassenderids}}
+                    <select name="sender_id" id="id_sender_id" class="form-control custom-select" onchange="this.form.submit();">
+                        <option value="">{{#str}}no_senderids, local_kwtsms{{/str}}</option>
+                        {{#senderids}}
+                            <option value="{{value}}" {{#selected}}selected{{/selected}}>{{value}}</option>
+                        {{/senderids}}
+                    </select>
+                {{/hassenderids}}
+                {{^hassenderids}}
+                    <p class="form-control-static text-muted">{{#str}}no_senderids, local_kwtsms{{/str}}</p>
+                {{/hassenderids}}
+            </div>
+        </div>
+    </form>
+
+    <form method="post" action="{{formaction}}" class="mform">
+        <input type="hidden" name="sesskey" value="{{sesskey}}">
+        <input type="hidden" name="gateway_action" value="savecountrycode">
+
+        <div class="form-group row mb-3">
+            <div class="col-sm-3">
+                <label for="id_default_country_code">{{#str}}default_country_code, local_kwtsms{{/str}}</label>
+            </div>
+            <div class="col-sm-9">
+                {{#hascoverage}}
+                    <select name="default_country_code" id="id_default_country_code" class="form-control custom-select" onchange="this.form.submit();">
+                        <option value="">--</option>
+                        {{#coverage}}
+                            <option value="{{value}}" {{#selected}}selected{{/selected}}>+{{value}}</option>
+                        {{/coverage}}
+                    </select>
+                    <small class="form-text text-muted">{{#str}}default_country_code_desc, local_kwtsms{{/str}}</small>
+                {{/hascoverage}}
+                {{^hascoverage}}
+                    <p class="form-control-static text-muted">--</p>
+                {{/hascoverage}}
+            </div>
+        </div>
+    </form>
+
+    {{#hascoverage}}
+        <div class="form-group row mb-3">
+            <div class="col-sm-3"><strong>{{#str}}active_coverage, local_kwtsms{{/str}}</strong></div>
+            <div class="col-sm-9">
+                {{#coveragebadges}}
+                    <span class="badge badge-light mr-1 mb-1">+{{value}}</span>
+                {{/coveragebadges}}
+            </div>
+        </div>
+    {{/hascoverage}}
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-9 offset-sm-3">
+            <button type="button" id="kwtsms-reload-btn" class="btn btn-outline-primary mr-2">{{#str}}reload, local_kwtsms{{/str}}</button>
+            <button type="button" id="kwtsms-logout-btn" class="btn btn-outline-danger">{{#str}}logout, local_kwtsms{{/str}}</button>
+        </div>
+    </div>
+{{/isconnected}}
+
+{{^isconnected}}
+    <h3>{{#str}}gateway_settings, local_kwtsms{{/str}}</h3>
+
+    <form id="kwtsms-login-form" class="mform">
+        <div class="form-group row mb-3">
+            <div class="col-sm-3"><label for="kwtsms-username">{{#str}}api_username, local_kwtsms{{/str}}</label></div>
+            <div class="col-sm-9">
+                <input type="text" id="kwtsms-username" class="form-control" autocomplete="username" required>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <div class="col-sm-3"><label for="kwtsms-password">{{#str}}api_password, local_kwtsms{{/str}}</label></div>
+            <div class="col-sm-9">
+                <input type="password" id="kwtsms-password" class="form-control" autocomplete="current-password" required>
+            </div>
+        </div>
+
+        <div class="form-group row mb-3">
+            <div class="col-sm-9 offset-sm-3">
+                <button type="submit" id="kwtsms-login-btn" class="btn btn-primary">{{#str}}login, local_kwtsms{{/str}}</button>
+            </div>
+        </div>
+    </form>
+{{/isconnected}}
+

@@ -16,14 +16,14 @@
 /**
  * Logs tab client-side logic for local_kwtsms.
  *
- * Handles clear logs, view details toggle, and CSV export.
+ * Handles clear logs (External Services), view details toggle, and CSV export navigation.
  *
  * @module     local_kwtsms/logs
  * @package
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery'], function($) {
+define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Ajax, Str, Notification) {
 
     /**
      * Show a feedback message in the logs feedback area.
@@ -72,7 +72,7 @@ define(['jquery'], function($) {
      * Build a query string from an object.
      *
      * @param {Object} obj Key-value pairs.
-     * @return {string} The query string (without leading ?).
+     * @return {string} The query string without leading ?.
      */
     function buildQueryString(obj) {
         var parts = [];
@@ -89,65 +89,60 @@ define(['jquery'], function($) {
          * Initialize logs tab event handlers.
          */
         init: function() {
-            // View details toggle.
             $(document).on('click', '.kwtsms-log-details-btn', function() {
                 var logId = $(this).data('log-id');
                 var $detailRow = $('#kwtsms-detail-' + logId);
                 $detailRow.toggleClass('d-none');
             });
 
-            // Clear logs button.
             $('#kwtsms-clear-logs-btn').on('click', function() {
                 var dateFrom = $('#filter_date_from').val();
                 var dateTo = $('#filter_date_to').val();
-
-                var msg = M.util.get_string('log_clear_confirm', 'local_kwtsms');
-                if (!confirm(msg)) {
-                    return;
-                }
-
                 var $btn = $(this);
-                $btn.prop('disabled', true);
 
-                var postData = {
-                    sesskey: M.cfg.sesskey
-                };
-                if (dateFrom) {
-                    // Convert date string to Unix timestamp (start of day).
-                    postData.date_from = Math.floor(new Date(dateFrom + 'T00:00:00').getTime() / 1000);
-                }
-                if (dateTo) {
-                    // Convert date string to Unix timestamp (end of day).
-                    postData.date_to = Math.floor(new Date(dateTo + 'T23:59:59').getTime() / 1000);
-                }
+                Str.get_string('log_clear_confirm', 'local_kwtsms').done(function(msg) {
+                    if (!window.confirm(msg)) {
+                        return;
+                    }
 
-                $.post(
-                    M.cfg.wwwroot + '/local/kwtsms/ajax/logs_clear.php',
-                    postData,
-                    function(result) {
+                    $btn.prop('disabled', true);
+
+                    var args = {
+                        datefrom: 0,
+                        dateto: 0
+                    };
+                    if (dateFrom) {
+                        args.datefrom = Math.floor(new Date(dateFrom + 'T00:00:00').getTime() / 1000);
+                    }
+                    if (dateTo) {
+                        args.dateto = Math.floor(new Date(dateTo + 'T23:59:59').getTime() / 1000);
+                    }
+
+                    var request = Ajax.call([{
+                        methodname: 'local_kwtsms_logs_clear',
+                        args: args
+                    }])[0];
+
+                    request.done(function(result) {
                         if (result.success) {
-                            location.reload();
+                            window.location.reload();
                         } else {
-                            showFeedback(result.error || 'Clear failed.', 'danger');
                             $btn.prop('disabled', false);
                         }
-                    },
-                    'json'
-                ).fail(function() {
-                    showFeedback('Request failed. Please try again.', 'danger');
-                    $btn.prop('disabled', false);
-                });
+                    }).fail(function() {
+                        Str.get_string('error_request_failed', 'local_kwtsms').done(function(errmsg) {
+                            showFeedback(errmsg, 'danger');
+                        }).fail(Notification.exception);
+                        $btn.prop('disabled', false);
+                    });
+                }).fail(Notification.exception);
             });
 
-            // Export CSV button.
             $('#kwtsms-export-logs-btn').on('click', function() {
                 var params = getFilterParams();
+                params.sesskey = M.cfg.sesskey;
                 var qs = buildQueryString(params);
-                var url = M.cfg.wwwroot + '/local/kwtsms/ajax/logs_export.php';
-                if (qs) {
-                    url += '?' + qs;
-                }
-                window.location.href = url;
+                window.location.href = M.cfg.wwwroot + '/local/kwtsms/logs_export.php?' + qs;
             });
         }
     };

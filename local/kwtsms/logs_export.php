@@ -17,14 +17,18 @@
 /**
  * CSV export endpoint for SMS log entries.
  *
+ * This is a file-download entry point, not an AJAX call, so it lives at the
+ * plugin root rather than going through the External Services API.
+ *
  * @package    local_kwtsms
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require_once(__DIR__ . '/../../../config.php');
+require_once(__DIR__ . '/../../config.php');
 
 require_login();
+require_sesskey();
 require_capability('local/kwtsms:viewlogs', context_system::instance());
 
 $status = optional_param('filter_status', '', PARAM_ALPHA);
@@ -33,7 +37,6 @@ $search = optional_param('filter_search', '', PARAM_TEXT);
 $datefrom = optional_param('filter_date_from', '', PARAM_TEXT);
 $dateto = optional_param('filter_date_to', '', PARAM_TEXT);
 
-// Build WHERE conditions.
 $conditions = [];
 $params = [];
 if (!empty($status)) {
@@ -73,16 +76,19 @@ $out = fopen('php://output', 'w');
 fprintf($out, chr(0xEF) . chr(0xBB) . chr(0xBF));
 
 fputcsv($out, [
-    'Date',
-    'Phone',
-    'Event',
-    'Status',
-    'Skip Reason',
-    'Credits',
-    'Test Mode',
-    'Message',
-    'Error Code',
+    get_string('log_date', 'local_kwtsms'),
+    get_string('log_phone', 'local_kwtsms'),
+    get_string('log_event', 'local_kwtsms'),
+    get_string('log_status', 'local_kwtsms'),
+    get_string('log_reason', 'local_kwtsms'),
+    get_string('log_credits', 'local_kwtsms'),
+    get_string('log_test_mode', 'local_kwtsms'),
+    get_string('log_message', 'local_kwtsms'),
+    get_string('log_error_code', 'local_kwtsms'),
 ]);
+
+$yes = get_string('yes');
+$no = get_string('no');
 
 $rs = $DB->get_recordset_select('local_kwtsms_log', $where, $params, 'timecreated DESC');
 foreach ($rs as $record) {
@@ -93,7 +99,7 @@ foreach ($rs as $record) {
         $record->status,
         $record->skip_reason ?? '',
         $record->credits_used,
-        $record->test_mode ? 'Yes' : 'No',
+        $record->test_mode ? $yes : $no,
         $record->message,
         $record->error_code ?? '',
     ]);

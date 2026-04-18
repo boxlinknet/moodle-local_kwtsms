@@ -1,0 +1,121 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_kwtsms/templates
+
+    SMS templates tab with inline edit/reset actions.
+
+    Context variables required for this template:
+    * templates array [{id, name, eventtype, recipientlabel, messageenshort,
+      messagearshort, messageen, messagear, placeholders:[{name}]}]
+
+    Example context (json):
+    {
+        "templates": [{
+            "id": 1,
+            "name": "User Enrolled",
+            "eventtype": "user_enrolment_created",
+            "recipientlabel": "Student",
+            "messageenshort": "Hi {firstname}, welcome to {coursename}.",
+            "messagearshort": "مرحبا {firstname}",
+            "messageen": "Hi {firstname}, welcome to {coursename}.",
+            "messagear": "مرحبا {firstname}",
+            "placeholders": [{"name":"firstname"},{"name":"coursename"}]
+        }]
+    }
+}}
+<div class="kwtsms-templates-tab">
+    <table class="generaltable table table-striped" id="kwtsms-templates-table">
+        <thead>
+            <tr>
+                <th>{{#str}}template_event, local_kwtsms{{/str}}</th>
+                <th>{{#str}}template_recipient, local_kwtsms{{/str}}</th>
+                <th>{{#str}}template_message_en, local_kwtsms{{/str}}</th>
+                <th>{{#str}}template_message_ar, local_kwtsms{{/str}}</th>
+                <th>{{#str}}template_placeholders, local_kwtsms{{/str}}</th>
+                <th>{{#str}}template_actions, local_kwtsms{{/str}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#templates}}
+                <tr data-template-id="{{id}}">
+                    <td>
+                        <strong>{{name}}</strong><br>
+                        <small class="text-muted">{{eventtype}}</small>
+                    </td>
+                    <td><span class="badge badge-secondary">{{recipientlabel}}</span></td>
+                    <td class="kwtsms-msg-en-display">{{messageenshort}}</td>
+                    <td class="kwtsms-msg-ar-display" dir="rtl">{{messagearshort}}</td>
+                    <td>
+                        {{#placeholders}}
+                            <span class="badge badge-info">&#123;{{name}}&#125;</span>
+                        {{/placeholders}}
+                    </td>
+                    <td class="kwtsms-template-actions">
+                        <button type="button" class="btn btn-sm btn-outline-primary kwtsms-edit-btn"
+                                data-id="{{id}}"
+                                title="{{#str}}template_edit, local_kwtsms{{/str}}">
+                            <i class="fa fa-pencil"></i>
+                            {{#str}}template_edit, local_kwtsms{{/str}}
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-warning kwtsms-reset-btn"
+                                data-id="{{id}}"
+                                title="{{#str}}template_reset, local_kwtsms{{/str}}">
+                            <i class="fa fa-undo"></i>
+                            {{#str}}template_reset, local_kwtsms{{/str}}
+                        </button>
+                    </td>
+                </tr>
+                <tr class="kwtsms-edit-row" data-edit-for="{{id}}" style="display: none;">
+                    <td colspan="6">
+                        <div class="kwtsms-edit-form p-3 border rounded bg-light">
+                            <div class="form-group mb-3">
+                                <label for="kwtsms-en-{{id}}">
+                                    <strong>{{#str}}template_message_en, local_kwtsms{{/str}}</strong>
+                                </label>
+                                <textarea id="kwtsms-en-{{id}}" class="form-control kwtsms-textarea-en" rows="3">{{messageen}}</textarea>
+                                <small class="form-text text-muted kwtsms-char-count-en"></small>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="kwtsms-ar-{{id}}">
+                                    <strong>{{#str}}template_message_ar, local_kwtsms{{/str}}</strong>
+                                </label>
+                                <textarea id="kwtsms-ar-{{id}}" class="form-control kwtsms-textarea-ar" dir="rtl" rows="3">{{messagear}}</textarea>
+                                <small class="form-text text-muted kwtsms-char-count-ar"></small>
+                            </div>
+                            <div class="mb-2">
+                                <strong>{{#str}}template_placeholders, local_kwtsms{{/str}}:</strong>
+                                {{#placeholders}}
+                                    <span class="badge badge-info">&#123;{{name}}&#125;</span>
+                                {{/placeholders}}
+                            </div>
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-primary kwtsms-save-btn" data-id="{{id}}">
+                                    {{#str}}savechanges{{/str}}
+                                </button>
+                                <button type="button" class="btn btn-secondary kwtsms-cancel-btn" data-id="{{id}}">
+                                    {{#str}}cancel{{/str}}
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {{/templates}}
+        </tbody>
+    </table>
+</div>
+

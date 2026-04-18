@@ -1,0 +1,180 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_kwtsms/help
+
+    Help tab with getting started, setup, sender ID, placeholders,
+    phone format, troubleshooting, and support sections.
+
+    Context variables required for this template:
+    * placeholders array [{eventlabel, placeholderlist}] each placeholderlist
+      is pre-rendered HTML string.
+
+    Example context (json):
+    {
+        "placeholders": [{"eventlabel":"User Enrolled","placeholderlist":"<code>{firstname}</code>"}]
+    }
+}}
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_getting_started, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <p>{{#str}}help_getting_started_text, local_kwtsms{{/str}}</p>
+        <ol>
+            <li>{{#str}}help_getting_started_step1, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_getting_started_step2, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_getting_started_step3, local_kwtsms{{/str}}</li>
+        </ol>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_setup_guide, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <ol>
+            <li>
+                <strong>{{#str}}tab_gateway, local_kwtsms{{/str}}:</strong>
+                {{#str}}help_setup_step_gateway, local_kwtsms{{/str}}
+            </li>
+            <li>
+                <strong>{{#str}}tab_settings, local_kwtsms{{/str}}:</strong>
+                {{#str}}help_setup_step_settings, local_kwtsms{{/str}}
+            </li>
+            <li>
+                <strong>{{#str}}tab_integrations, local_kwtsms{{/str}}:</strong>
+                {{#str}}help_setup_step_integrations, local_kwtsms{{/str}}
+            </li>
+            <li>
+                <strong>{{#str}}tab_templates, local_kwtsms{{/str}}:</strong>
+                {{#str}}help_setup_step_templates, local_kwtsms{{/str}}
+            </li>
+        </ol>
+        <div class="alert alert-info">{{#str}}help_setup_testmode_note, local_kwtsms{{/str}}</div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_senderid, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <p>{{#str}}help_senderid_text, local_kwtsms{{/str}}</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>{{#str}}help_senderid_table_type, local_kwtsms{{/str}}</th>
+                    <th>{{#str}}help_senderid_table_description, local_kwtsms{{/str}}</th>
+                    <th>{{#str}}help_senderid_table_usecase, local_kwtsms{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>KWT-SMS</code></td>
+                    <td>{{#str}}help_senderid_table_kwt_description, local_kwtsms{{/str}}</td>
+                    <td>{{#str}}help_senderid_table_kwt_usecase, local_kwtsms{{/str}}</td>
+                </tr>
+                <tr>
+                    <td>{{#str}}help_senderid_table_trans_type, local_kwtsms{{/str}}</td>
+                    <td>{{#str}}help_senderid_table_trans_description, local_kwtsms{{/str}}</td>
+                    <td>{{#str}}help_senderid_table_trans_usecase, local_kwtsms{{/str}}</td>
+                </tr>
+                <tr>
+                    <td>{{#str}}help_senderid_table_promo_type, local_kwtsms{{/str}}</td>
+                    <td>{{#str}}help_senderid_table_promo_description, local_kwtsms{{/str}}</td>
+                    <td>{{#str}}help_senderid_table_promo_usecase, local_kwtsms{{/str}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>{{#str}}help_senderid_register, local_kwtsms{{/str}}</p>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_placeholders, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <p>{{#str}}help_placeholders_intro, local_kwtsms{{/str}}</p>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>{{#str}}template_event, local_kwtsms{{/str}}</th>
+                    <th>{{#str}}template_placeholders, local_kwtsms{{/str}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#placeholders}}
+                    <tr>
+                        <td>{{eventlabel}}</td>
+                        <td>{{{placeholderlist}}}</td>
+                    </tr>
+                {{/placeholders}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_phone_format, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <p>{{#str}}help_phone_format_text, local_kwtsms{{/str}}</p>
+        <ul>
+            <li>{{#str}}help_phone_format_international, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_phone_format_local, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_phone_format_arabic, local_kwtsms{{/str}}</li>
+        </ul>
+        <div class="alert alert-warning">{{#str}}help_phone_format_note, local_kwtsms{{/str}}</div>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_troubleshooting, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <h5>{{#str}}help_troubleshooting_nosms_heading, local_kwtsms{{/str}}</h5>
+        <ul>
+            <li>{{#str}}help_troubleshooting_nosms_item1, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_nosms_item2, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_nosms_item3, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_nosms_item4, local_kwtsms{{/str}}</li>
+        </ul>
+
+        <h5>{{#str}}help_troubleshooting_balance_heading, local_kwtsms{{/str}}</h5>
+        <ul>
+            <li>{{#str}}help_troubleshooting_balance_item1, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_balance_item2, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_balance_item3, local_kwtsms{{/str}}</li>
+        </ul>
+
+        <h5>{{#str}}help_troubleshooting_senderid_heading, local_kwtsms{{/str}}</h5>
+        <ul>
+            <li>{{#str}}help_troubleshooting_senderid_item1, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_senderid_item2, local_kwtsms{{/str}}</li>
+        </ul>
+
+        <h5>{{#str}}help_troubleshooting_country_heading, local_kwtsms{{/str}}</h5>
+        <ul>
+            <li>{{#str}}help_troubleshooting_country_item1, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_troubleshooting_country_item2, local_kwtsms{{/str}}</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card mb-4">
+    <div class="card-header"><h4 class="mb-0">{{#str}}help_support, local_kwtsms{{/str}}</h4></div>
+    <div class="card-body">
+        <p>{{#str}}help_support_text, local_kwtsms{{/str}}</p>
+        <ul>
+            <li>{{#str}}help_support_provider, local_kwtsms{{/str}}</li>
+            <li>{{#str}}help_support_plugin, local_kwtsms{{/str}}</li>
+        </ul>
+    </div>
+</div>

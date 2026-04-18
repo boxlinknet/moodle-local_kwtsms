@@ -33,8 +33,7 @@ namespace local_kwtsms;
  *
  * @covers \local_kwtsms\manager
  */
-class manager_test extends \advanced_testcase {
-
+final class manager_test extends \advanced_testcase {
     /**
      * Set up each test with a fresh Moodle state.
      */

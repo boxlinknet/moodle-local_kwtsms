@@ -1,0 +1,122 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_kwtsms/settings
+
+    General settings form for the kwtSMS plugin.
+
+    Context variables required for this template:
+    * formaction string Form POST URL.
+    * sesskey string Session key.
+    * gatewayenabled bool
+    * testmode bool
+    * debuglogging bool
+    * langen bool Default language is English.
+    * langar bool Default language is Arabic.
+    * adminphones string
+    * lowbalancethreshold int
+
+    Example context (json):
+    {
+        "formaction": "/local/kwtsms/view.php?tab=settings",
+        "sesskey": "abc123",
+        "gatewayenabled": true,
+        "testmode": false,
+        "debuglogging": false,
+        "langen": true,
+        "langar": false,
+        "adminphones": "",
+        "lowbalancethreshold": 0
+    }
+}}
+<form method="post" action="{{formaction}}" class="mform">
+    <input type="hidden" name="sesskey" value="{{sesskey}}">
+
+    <h3>{{#str}}settings_general, local_kwtsms{{/str}}</h3>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_gateway_enabled">{{#str}}gateway_enabled, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <input type="hidden" name="gateway_enabled" value="0">
+            <input type="checkbox" name="gateway_enabled" id="id_gateway_enabled" value="1" {{#gatewayenabled}}checked{{/gatewayenabled}}>
+            <small class="form-text text-muted">{{#str}}gateway_enabled_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_test_mode">{{#str}}test_mode, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <input type="hidden" name="test_mode" value="0">
+            <input type="checkbox" name="test_mode" id="id_test_mode" value="1" {{#testmode}}checked{{/testmode}}>
+            <small class="form-text text-muted">{{#str}}test_mode_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_debug_logging">{{#str}}debug_logging, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <input type="hidden" name="debug_logging" value="0">
+            <input type="checkbox" name="debug_logging" id="id_debug_logging" value="1" {{#debuglogging}}checked{{/debuglogging}}>
+            <small class="form-text text-muted">{{#str}}debug_logging_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_default_language">{{#str}}default_language, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <select name="default_language" id="id_default_language" class="form-control custom-select">
+                <option value="en" {{#langen}}selected{{/langen}}>{{#str}}language_en, local_kwtsms{{/str}}</option>
+                <option value="ar" {{#langar}}selected{{/langar}}>{{#str}}language_ar, local_kwtsms{{/str}}</option>
+            </select>
+            <small class="form-text text-muted">{{#str}}default_language_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_admin_phones">{{#str}}admin_phones, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <input type="text" name="admin_phones" id="id_admin_phones" class="form-control" value="{{adminphones}}">
+            <small class="form-text text-muted">{{#str}}admin_phones_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-3">
+            <label for="id_low_balance_threshold">{{#str}}low_balance_threshold, local_kwtsms{{/str}}</label>
+        </div>
+        <div class="col-sm-9">
+            <input type="number" name="low_balance_threshold" id="id_low_balance_threshold" class="form-control" value="{{lowbalancethreshold}}" min="0">
+            <small class="form-text text-muted">{{#str}}low_balance_threshold_desc, local_kwtsms{{/str}}</small>
+        </div>
+    </div>
+
+    <div class="form-group row mb-3">
+        <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary">{{#str}}savechanges{{/str}}</button>
+        </div>
+    </div>
+</form>

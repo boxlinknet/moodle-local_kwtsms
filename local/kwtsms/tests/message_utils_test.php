@@ -30,8 +30,7 @@ namespace local_kwtsms;
  * @package    local_kwtsms
  * @covers     \local_kwtsms\message_utils
  */
-class message_utils_test extends \advanced_testcase {
-
+final class message_utils_test extends \advanced_testcase {
     /**
      * Plain text passes through the clean method unchanged.
      */

@@ -29,8 +29,7 @@ namespace local_kwtsms;
  *
  * @covers \local_kwtsms\phone_utils
  */
-class phone_utils_test extends \advanced_testcase {
-
+final class phone_utils_test extends \advanced_testcase {
     /**
      * Test that normalize strips +, 00, spaces, dashes, and parentheses.
      */

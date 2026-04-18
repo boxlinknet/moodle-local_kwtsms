@@ -16,7 +16,7 @@
 /**
  * Client-side JS for the Templates tab.
  *
- * Handles inline editing, AJAX save/reset, and character counting.
+ * Handles inline editing, save/reset via External Services, and character counting.
  *
  * @module     local_kwtsms/templates
  * @package
@@ -24,7 +24,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-define(['jquery'], function($) {
+define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Ajax, Str, Notification) {
 
     /**
      * SMS page limits.
@@ -78,7 +78,9 @@ define(['jquery'], function($) {
      */
     function updateCounter($textarea, $counter) {
         var result = countSms($textarea.val());
-        $counter.text('Characters: ' + result.chars + ' (' + result.pages + ' SMS page(s))');
+        Str.get_string('template_char_count', 'local_kwtsms', result).done(function(msg) {
+            $counter.text(msg);
+        }).fail(Notification.exception);
     }
 
     /**
@@ -90,7 +92,6 @@ define(['jquery'], function($) {
         $('tr[data-edit-for="' + id + '"]').show();
         var $editRow = $('tr[data-edit-for="' + id + '"]');
 
-        // Update counters on show.
         var $enTextarea = $editRow.find('.kwtsms-textarea-en');
         var $arTextarea = $editRow.find('.kwtsms-textarea-ar');
         updateCounter($enTextarea, $editRow.find('.kwtsms-char-count-en'));
@@ -107,7 +108,7 @@ define(['jquery'], function($) {
     }
 
     /**
-     * Save a template via AJAX.
+     * Save a template via the External Services API.
      *
      * @param {number} id
      */
@@ -119,19 +120,13 @@ define(['jquery'], function($) {
         var $saveBtn = $editRow.find('.kwtsms-save-btn');
         $saveBtn.prop('disabled', true);
 
-        $.ajax({
-            url: M.cfg.wwwroot + '/local/kwtsms/ajax/template_save.php',
-            method: 'POST',
-            data: {
-                id: id,
-                message_en: messageEn,
-                message_ar: messageAr,
-                sesskey: M.cfg.sesskey
-            },
-            dataType: 'json'
-        }).done(function(response) {
+        var request = Ajax.call([{
+            methodname: 'local_kwtsms_template_save',
+            args: {id: id, messageen: messageEn, messagear: messageAr}
+        }])[0];
+
+        request.done(function(response) {
             if (response.success) {
-                // Update the display cells in the main row.
                 var $mainRow = $('tr[data-template-id="' + id + '"]');
                 var maxDisplay = 80;
                 var enShort = messageEn.length > maxDisplay
@@ -145,53 +140,54 @@ define(['jquery'], function($) {
 
                 hideEditRow(id);
 
-                // Brief success feedback.
-                $saveBtn.removeClass('btn-primary').addClass('btn-success').text('Saved!');
-                setTimeout(function() {
-                    $saveBtn.removeClass('btn-success').addClass('btn-primary').text('Save changes');
-                    $saveBtn.prop('disabled', false);
-                }, 1500);
+                Str.get_strings([
+                    {key: 'template_saved', component: 'local_kwtsms'},
+                    {key: 'savechanges', component: 'moodle'}
+                ]).done(function(strings) {
+                    $saveBtn.removeClass('btn-primary').addClass('btn-success').text(strings[0]);
+                    setTimeout(function() {
+                        $saveBtn.removeClass('btn-success').addClass('btn-primary').text(strings[1]);
+                        $saveBtn.prop('disabled', false);
+                    }, 1500);
+                }).fail(Notification.exception);
             } else {
                 $saveBtn.prop('disabled', false);
-                window.alert('Failed to save template. Please try again.');
+                Str.get_string('template_save_failed', 'local_kwtsms').done(function(msg) {
+                    Notification.alert('', msg, '');
+                }).fail(Notification.exception);
             }
         }).fail(function() {
             $saveBtn.prop('disabled', false);
-            window.alert('Error saving template. Please check your connection and try again.');
+            Notification.exception.apply(null, arguments);
         });
     }
 
     /**
-     * Reset a template via AJAX after confirmation.
+     * Reset a template via the External Services API after confirmation.
      *
      * @param {number} id
      */
     function resetTemplate(id) {
-        var confirmed = window.confirm(
-            'Reset this template to its default content? Your customizations will be lost.'
-        );
-        if (!confirmed) {
-            return;
-        }
-
-        $.ajax({
-            url: M.cfg.wwwroot + '/local/kwtsms/ajax/template_reset.php',
-            method: 'POST',
-            data: {
-                id: id,
-                sesskey: M.cfg.sesskey
-            },
-            dataType: 'json'
-        }).done(function(response) {
-            if (response.success) {
-                // Reload the page to reflect the reset content.
-                window.location.reload();
-            } else {
-                window.alert('Failed to reset template. Please try again.');
+        Str.get_string('template_reset_confirm', 'local_kwtsms').done(function(msg) {
+            if (!window.confirm(msg)) {
+                return;
             }
-        }).fail(function() {
-            window.alert('Error resetting template. Please check your connection and try again.');
-        });
+
+            var request = Ajax.call([{
+                methodname: 'local_kwtsms_template_reset',
+                args: {id: id}
+            }])[0];
+
+            request.done(function(response) {
+                if (response.success) {
+                    window.location.reload();
+                } else {
+                    Str.get_string('template_reset_failed', 'local_kwtsms').done(function(fail) {
+                        Notification.alert('', fail, '');
+                    }).fail(Notification.exception);
+                }
+            }).fail(Notification.exception);
+        }).fail(Notification.exception);
     }
 
     return {
@@ -199,31 +195,26 @@ define(['jquery'], function($) {
          * Initialize the templates tab event handlers.
          */
         init: function() {
-            // Edit button: toggle edit row.
             $(document).on('click', '.kwtsms-edit-btn', function() {
                 var id = $(this).data('id');
                 showEditRow(id);
             });
 
-            // Cancel button: hide edit row.
             $(document).on('click', '.kwtsms-cancel-btn', function() {
                 var id = $(this).data('id');
                 hideEditRow(id);
             });
 
-            // Save button: AJAX save.
             $(document).on('click', '.kwtsms-save-btn', function() {
                 var id = $(this).data('id');
                 saveTemplate(id);
             });
 
-            // Reset button: confirm and AJAX reset.
             $(document).on('click', '.kwtsms-reset-btn', function() {
                 var id = $(this).data('id');
                 resetTemplate(id);
             });
 
-            // Live character/page counters on textareas.
             $(document).on('input', '.kwtsms-textarea-en', function() {
                 var $editRow = $(this).closest('tr');
                 updateCounter($(this), $editRow.find('.kwtsms-char-count-en'));

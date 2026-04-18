@@ -1,0 +1,167 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_kwtsms/dashboard
+
+    Dashboard tab for the kwtSMS admin UI: gateway status, balance,
+    active sender ID, send statistics, and a recent activity table.
+
+    Context variables required for this template:
+    * isconfigured bool Whether the API credentials are saved.
+    * isenabled bool Whether the gateway is enabled globally.
+    * testmode bool Whether test mode is active.
+    * balance int Cached credit balance.
+    * lastsynced string Human-readable last sync time.
+    * senderid string Currently selected sender ID.
+    * hassenderid bool Whether a sender ID is configured.
+    * senttoday int Count of SMS sent today.
+    * sentweek int Count of SMS sent this week.
+    * sentmonth int Count of SMS sent this month.
+    * failedmonth int Count of failed SMS this month.
+    * hasrecentlogs bool Whether any recent logs exist.
+    * recentlogs array Array of recent log entries (each with timecreatedstr,
+      phonemasked, eventlabel, statuslabel).
+
+    Example context (json):
+    {
+        "isconfigured": true,
+        "isenabled": true,
+        "testmode": 0,
+        "balance": 1000,
+        "lastsynced": "1 Jan 2026, 12:00",
+        "senderid": "KWT-SMS",
+        "hassenderid": true,
+        "senttoday": 5,
+        "sentweek": 20,
+        "sentmonth": 50,
+        "failedmonth": 2,
+        "hasrecentlogs": true,
+        "recentlogs": [{
+            "timecreatedstr": "1 Jan 2026, 12:00",
+            "phonemasked": "********7890",
+            "eventlabel": "User Enrolled",
+            "statuslabel": "Sent"
+        }]
+    }
+}}
+<div class="row mb-4">
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{#str}}gateway_status, local_kwtsms{{/str}}</h5>
+                <p class="mb-1">
+                    {{#isconfigured}}
+                        <span class="badge badge-success bg-success">{{#str}}connected, local_kwtsms{{/str}}</span>
+                    {{/isconfigured}}
+                    {{^isconfigured}}
+                        <span class="badge badge-danger bg-danger">{{#str}}disconnected, local_kwtsms{{/str}}</span>
+                    {{/isconfigured}}
+                </p>
+                <p class="mb-1">
+                    {{#isenabled}}
+                        <span class="badge badge-success bg-success">{{#str}}enabled, local_kwtsms{{/str}}</span>
+                    {{/isenabled}}
+                    {{^isenabled}}
+                        <span class="badge badge-secondary bg-secondary">{{#str}}disabled, local_kwtsms{{/str}}</span>
+                    {{/isenabled}}
+                </p>
+                <p class="mb-0">
+                    {{#testmode}}
+                        <span class="badge badge-warning bg-warning text-dark">{{#str}}test_mode_on, local_kwtsms{{/str}}</span>
+                    {{/testmode}}
+                    {{^testmode}}
+                        <span class="badge badge-info bg-info text-dark">{{#str}}test_mode_off, local_kwtsms{{/str}}</span>
+                    {{/testmode}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{#str}}balance, local_kwtsms{{/str}}</h5>
+                <p class="h3 mb-1">
+                    {{balance}}
+                    <small class="text-muted">{{#str}}credits, local_kwtsms{{/str}}</small>
+                </p>
+                <p class="text-muted mb-0">
+                    <small>{{#str}}last_synced, local_kwtsms{{/str}}: {{lastsynced}}</small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{#str}}active_sender_id, local_kwtsms{{/str}}</h5>
+                <p class="h4 mb-0">
+                    {{#hassenderid}}{{senderid}}{{/hassenderid}}
+                    {{^hassenderid}}{{#str}}not_configured, local_kwtsms{{/str}}{{/hassenderid}}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{#str}}send_statistics, local_kwtsms{{/str}}</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>{{#str}}sent_today, local_kwtsms{{/str}}: <strong>{{senttoday}}</strong></li>
+                    <li>{{#str}}sent_week, local_kwtsms{{/str}}: <strong>{{sentweek}}</strong></li>
+                    <li>{{#str}}sent_month, local_kwtsms{{/str}}: <strong>{{sentmonth}}</strong></li>
+                    <li>{{#str}}failed_count, local_kwtsms{{/str}}: <strong class="text-danger">{{failedmonth}}</strong></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{#str}}recent_activity, local_kwtsms{{/str}}</h5>
+        {{^hasrecentlogs}}
+            <p class="text-muted">{{#str}}no_recent_activity, local_kwtsms{{/str}}</p>
+        {{/hasrecentlogs}}
+        {{#hasrecentlogs}}
+            <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                    <thead>
+                        <tr>
+                            <th>{{#str}}log_date, local_kwtsms{{/str}}</th>
+                            <th>{{#str}}log_phone, local_kwtsms{{/str}}</th>
+                            <th>{{#str}}log_event, local_kwtsms{{/str}}</th>
+                            <th>{{#str}}log_status, local_kwtsms{{/str}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#recentlogs}}
+                            <tr>
+                                <td>{{timecreatedstr}}</td>
+                                <td>{{phonemasked}}</td>
+                                <td>{{eventlabel}}</td>
+                                <td>{{statuslabel}}</td>
+                            </tr>
+                        {{/recentlogs}}
+                    </tbody>
+                </table>
+            </div>
+        {{/hasrecentlogs}}
+    </div>
+</div>

@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2026032702;
+$plugin->version   = 2026041900;
 $plugin->requires  = 2023100900;      // Moodle 4.3+.
 $plugin->component = 'local_kwtsms';
 $plugin->maturity  = MATURITY_BETA;
-$plugin->release   = '1.0.0';
+$plugin->release   = '1.0.1';

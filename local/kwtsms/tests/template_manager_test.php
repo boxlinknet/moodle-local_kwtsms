@@ -29,8 +29,7 @@ namespace local_kwtsms;
  *
  * @covers \local_kwtsms\template_manager
  */
-class template_manager_test extends \advanced_testcase {
-
+final class template_manager_test extends \advanced_testcase {
     /**
      * Test that replace_placeholders substitutes all matching keys.
      */

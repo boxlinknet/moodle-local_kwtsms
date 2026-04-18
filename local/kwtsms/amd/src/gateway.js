@@ -16,14 +16,14 @@
 /**
  * Gateway tab client-side logic for local_kwtsms.
  *
- * Handles login, logout, and reload actions via AJAX.
+ * Handles login, logout, and reload actions via the External Services API.
  *
  * @module     local_kwtsms/gateway
  * @package
  * @copyright  2026 kwtSMS <support@kwtsms.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery'], function($) {
+define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Ajax, Str, Notification) {
 
     /**
      * Show a feedback message in the gateway feedback area.
@@ -65,12 +65,23 @@ define(['jquery'], function($) {
         $btn.text($btn.data('original-text'));
     }
 
+    /**
+     * Show the generic request failed message in the feedback area and re-enable the button.
+     *
+     * @param {jQuery} $btn The button element.
+     */
+    function showRequestFailed($btn) {
+        Str.get_string('error_request_failed', 'local_kwtsms').done(function(msg) {
+            showFeedback(msg, 'danger');
+            enableButton($btn);
+        }).fail(Notification.exception);
+    }
+
     return {
         /**
          * Initialize gateway tab event handlers.
          */
         init: function() {
-            // Login form submission.
             $('#kwtsms-login-form').on('submit', function(e) {
                 e.preventDefault();
                 clearFeedback();
@@ -85,77 +96,67 @@ define(['jquery'], function($) {
 
                 disableButton($btn);
 
-                $.post(
-                    M.cfg.wwwroot + '/local/kwtsms/ajax/gateway_login.php',
-                    {
-                        username: username,
-                        password: password,
-                        sesskey: M.cfg.sesskey
-                    },
-                    function(result) {
-                        if (result.success) {
-                            location.reload();
-                        } else {
-                            showFeedback(result.error || 'Login failed.', 'danger');
+                var request = Ajax.call([{
+                    methodname: 'local_kwtsms_gateway_login',
+                    args: {username: username, password: password}
+                }])[0];
+
+                request.done(function(result) {
+                    if (result.success) {
+                        window.location.reload();
+                    } else {
+                        Str.get_string('login_failed', 'local_kwtsms').done(function(fallback) {
+                            showFeedback(result.error || fallback, 'danger');
                             enableButton($btn);
-                        }
-                    },
-                    'json'
-                ).fail(function() {
-                    showFeedback('Request failed. Please try again.', 'danger');
-                    enableButton($btn);
+                        }).fail(Notification.exception);
+                    }
+                }).fail(function() {
+                    showRequestFailed($btn);
                 });
             });
 
-            // Logout button.
             $('#kwtsms-logout-btn').on('click', function() {
                 clearFeedback();
                 var $btn = $(this);
                 disableButton($btn);
 
-                $.post(
-                    M.cfg.wwwroot + '/local/kwtsms/ajax/gateway_logout.php',
-                    {
-                        sesskey: M.cfg.sesskey
-                    },
-                    function(result) {
-                        if (result.success) {
-                            location.reload();
-                        } else {
-                            showFeedback(result.error || 'Logout failed.', 'danger');
-                            enableButton($btn);
-                        }
-                    },
-                    'json'
-                ).fail(function() {
-                    showFeedback('Request failed. Please try again.', 'danger');
-                    enableButton($btn);
+                var request = Ajax.call([{
+                    methodname: 'local_kwtsms_gateway_logout',
+                    args: {}
+                }])[0];
+
+                request.done(function(result) {
+                    if (result.success) {
+                        window.location.reload();
+                    } else {
+                        enableButton($btn);
+                    }
+                }).fail(function() {
+                    showRequestFailed($btn);
                 });
             });
 
-            // Reload button.
             $('#kwtsms-reload-btn').on('click', function() {
                 clearFeedback();
                 var $btn = $(this);
                 disableButton($btn);
 
-                $.post(
-                    M.cfg.wwwroot + '/local/kwtsms/ajax/gateway_reload.php',
-                    {
-                        sesskey: M.cfg.sesskey
-                    },
-                    function(result) {
-                        if (result.success) {
-                            location.reload();
-                        } else {
-                            showFeedback(result.error || 'Reload failed.', 'danger');
+                var request = Ajax.call([{
+                    methodname: 'local_kwtsms_gateway_reload',
+                    args: {}
+                }])[0];
+
+                request.done(function(result) {
+                    if (result.success) {
+                        window.location.reload();
+                    } else {
+                        Str.get_string('error_reload_failed', 'local_kwtsms').done(function(fallback) {
+                            showFeedback(result.error || fallback, 'danger');
                             enableButton($btn);
-                        }
-                    },
-                    'json'
-                ).fail(function() {
-                    showFeedback('Request failed. Please try again.', 'danger');
-                    enableButton($btn);
+                        }).fail(Notification.exception);
+                    }
+                }).fail(function() {
+                    showRequestFailed($btn);
                 });
             });
         }
