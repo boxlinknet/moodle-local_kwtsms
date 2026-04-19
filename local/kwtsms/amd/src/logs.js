@@ -40,8 +40,12 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
     /**
      * Collect current filter params from the filter form.
      *
+     * Property names use snake_case to match the PHP endpoint parameter
+     * names expected by logs_export.php.
+     *
      * @return {Object} The filter parameters as key-value pairs.
      */
+    /* eslint-disable camelcase */
     function getFilterParams() {
         var params = {};
         var status = $('#filter_status').val();
@@ -51,22 +55,23 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
         var dateTo = $('#filter_date_to').val();
 
         if (status) {
-            params['filter_status'] = status;
+            params.filter_status = status;
         }
         if (event) {
-            params['filter_event'] = event;
+            params.filter_event = event;
         }
         if (search) {
-            params['filter_search'] = search;
+            params.filter_search = search;
         }
         if (dateFrom) {
-            params['filter_date_from'] = dateFrom;
+            params.filter_date_from = dateFrom;
         }
         if (dateTo) {
-            params['filter_date_to'] = dateTo;
+            params.filter_date_to = dateTo;
         }
         return params;
     }
+    /* eslint-enable camelcase */
 
     /**
      * Build a query string from an object.
