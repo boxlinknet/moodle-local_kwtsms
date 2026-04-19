@@ -53,16 +53,26 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
         var dateFrom = $('#filter_date_from').val();
         var dateTo = $('#filter_date_to').val();
 
-        // eslint-disable-next-line camelcase
-        if (status) { params.filter_status = status; }
-        // eslint-disable-next-line camelcase
-        if (event) { params.filter_event = event; }
-        // eslint-disable-next-line camelcase
-        if (search) { params.filter_search = search; }
-        // eslint-disable-next-line camelcase
-        if (dateFrom) { params.filter_date_from = dateFrom; }
-        // eslint-disable-next-line camelcase
-        if (dateTo) { params.filter_date_to = dateTo; }
+        if (status) {
+            // eslint-disable-next-line camelcase
+            params.filter_status = status;
+        }
+        if (event) {
+            // eslint-disable-next-line camelcase
+            params.filter_event = event;
+        }
+        if (search) {
+            // eslint-disable-next-line camelcase
+            params.filter_search = search;
+        }
+        if (dateFrom) {
+            // eslint-disable-next-line camelcase
+            params.filter_date_from = dateFrom;
+        }
+        if (dateTo) {
+            // eslint-disable-next-line camelcase
+            params.filter_date_to = dateTo;
+        }
         return params;
     }
 
