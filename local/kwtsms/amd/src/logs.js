@@ -45,7 +45,6 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
      *
      * @return {Object} The filter parameters as key-value pairs.
      */
-    /* eslint-disable camelcase */
     function getFilterParams() {
         var params = {};
         var status = $('#filter_status').val();
@@ -54,24 +53,18 @@ define(['jquery', 'core/ajax', 'core/str', 'core/notification'], function($, Aja
         var dateFrom = $('#filter_date_from').val();
         var dateTo = $('#filter_date_to').val();
 
-        if (status) {
-            params.filter_status = status;
-        }
-        if (event) {
-            params.filter_event = event;
-        }
-        if (search) {
-            params.filter_search = search;
-        }
-        if (dateFrom) {
-            params.filter_date_from = dateFrom;
-        }
-        if (dateTo) {
-            params.filter_date_to = dateTo;
-        }
+        // eslint-disable-next-line camelcase
+        if (status) { params.filter_status = status; }
+        // eslint-disable-next-line camelcase
+        if (event) { params.filter_event = event; }
+        // eslint-disable-next-line camelcase
+        if (search) { params.filter_search = search; }
+        // eslint-disable-next-line camelcase
+        if (dateFrom) { params.filter_date_from = dateFrom; }
+        // eslint-disable-next-line camelcase
+        if (dateTo) { params.filter_date_to = dateTo; }
         return params;
     }
-    /* eslint-enable camelcase */
 
     /**
      * Build a query string from an object.
