@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - 2026-04-19
+
+### Added
+- GitHub Actions workflow (`.github/workflows/ci.yml`) running moodle-plugin-ci on every push/PR across PHP 8.1/8.2/8.3 × Moodle 4.3/4.4/4.5 × pgsql/mariadb (4 matrix combinations)
+
+### Changed
+- `amd/build/*.min.js` regenerated via Moodle's canonical grunt rollup (previous terser output failed CI "stale" check)
+- `amd/src/logs.js` and `amd/src/templates.js`: replaced `window.confirm()` with `Notification.saveCancel()` (eslint no-alert)
+- `amd/src/logs.js`: added `eslint-disable-next-line camelcase` comments on `filter_*` property assignments (mirror PHP param names)
+- `styles.css`: lowercase hex color `#ffa200` (stylelint color-hex-case)
+
+### Addressed
+- CONTRIB-10429 issue #1 (boxlinknet/moodle-local_kwtsms#1)
+
 ## [1.0.1] - 2026-04-19
 
 ### Changed
