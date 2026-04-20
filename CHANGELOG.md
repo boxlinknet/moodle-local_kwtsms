@@ -4,8 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [1.0.2] - 2026-04-19
 
+### Approved
+- 2026-04-20: Plugin approved on the Moodle Plugins Directory and published at https://moodle.org/plugins/local_kwtsms (tracker CONTRIB-10429 closed as Done).
+
 ### Added
-- GitHub Actions workflow (`.github/workflows/ci.yml`) running moodle-plugin-ci on every push/PR across PHP 8.1/8.2/8.3 × Moodle 4.3/4.4/4.5 × pgsql/mariadb (4 matrix combinations)
+- GitHub Actions workflow (`.github/workflows/ci.yml`) running moodle-plugin-ci on every push/PR across PHP 8.1/8.2/8.3 × Moodle 4.3/4.4/4.5/5.0/5.1/5.2 × pgsql/mariadb (7 matrix combinations, all green)
 
 ### Changed
 - `amd/build/*.min.js` regenerated via Moodle's canonical grunt rollup (previous terser output failed CI "stale" check)

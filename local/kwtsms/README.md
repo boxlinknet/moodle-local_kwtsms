@@ -1,12 +1,15 @@
 # kwtSMS for Moodle
 
-[![Moodle Plugin](https://img.shields.io/badge/Moodle-4.3+-orange.svg)](https://moodle.org)
+[![Moodle Plugin Directory](https://img.shields.io/badge/Moodle.org-local__kwtsms-orange.svg)](https://moodle.org/plugins/local_kwtsms)
+[![Moodle](https://img.shields.io/badge/Moodle-4.3+-orange.svg)](https://moodle.org)
 [![PHP](https://img.shields.io/badge/PHP-8.1+-777BB4.svg)](https://www.php.net)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![GitHub issues](https://img.shields.io/github/issues/boxlinknet/moodle-local_kwtsms)](https://github.com/boxlinknet/moodle-local_kwtsms/issues)
 [![GitHub release](https://img.shields.io/github/v/release/boxlinknet/moodle-local_kwtsms?include_prereleases)](https://github.com/boxlinknet/moodle-local_kwtsms/releases)
 
 Send SMS notifications to students and administrators via the kwtSMS gateway (kwtsms.com).
+
+Available on the official [Moodle Plugins Directory](https://moodle.org/plugins/local_kwtsms).
 
 ## About kwtSMS
 
@@ -35,16 +38,58 @@ For more integrations, visit the [kwtSMS Integrations page](https://www.kwtsms.c
 
 ## Requirements
 
-- Moodle 4.3 or later
-- PHP 8.1 or later
+- **Moodle:** 4.3 or later (tested on 4.3, 4.4, 4.5, 5.0, 5.1, 5.2)
+- **PHP:** 8.1 or later (tested on 8.1, 8.2, 8.3)
+- **Database:** PostgreSQL or MariaDB/MySQL (both verified in CI)
 - A kwtSMS account (sign up at https://www.kwtsms.com)
+
+### Tested compatibility matrix
+
+Every push runs the Moodle Plugin CI across the full matrix below. All jobs green as of v1.0.2.
+
+| Moodle | PHP | Database |
+|--------|-----|----------|
+| 4.3    | 8.1 | PostgreSQL |
+| 4.4    | 8.1 | MariaDB |
+| 4.5    | 8.2 | PostgreSQL |
+| 4.5    | 8.3 | MariaDB |
+| 5.0    | 8.2 | PostgreSQL |
+| 5.1    | 8.3 | MariaDB |
+| 5.2    | 8.3 | PostgreSQL |
 
 ## Installation
 
-1. Download and extract to `local/kwtsms/` in your Moodle directory
-2. Visit **Site administration > Notifications** to complete the installation
-3. Go to **Site administration > Plugins > Local plugins > kwtSMS**
-4. Open the **Gateway** tab and log in with your kwtSMS API credentials
+Pick whichever option suits your workflow. All three install the same version.
+
+### Option 1: Install from Moodle.org (recommended)
+
+1. Sign in to your Moodle site as an administrator.
+2. Go to **Site administration > Plugins > Install plugins**.
+3. Click **Install plugins from the Moodle plugins directory**.
+4. Search for `kwtSMS` or go to https://moodle.org/plugins/local_kwtsms.
+5. Click **Install now** and follow the prompts.
+
+### Option 2: Upload a ZIP
+
+1. Download the latest release ZIP from the
+   [GitHub releases page](https://github.com/boxlinknet/moodle-local_kwtsms/releases)
+   or from the [Moodle plugins directory](https://moodle.org/plugins/local_kwtsms).
+2. In Moodle, go to **Site administration > Plugins > Install plugins**.
+3. Drag the ZIP into the installer and click **Install plugin from the ZIP file**.
+4. Follow the prompts to complete the upgrade.
+
+### Option 3: Install from source
+
+1. Clone or extract the plugin into `local/kwtsms/` under your Moodle directory:
+   ```bash
+   git clone https://github.com/boxlinknet/moodle-local_kwtsms.git local/kwtsms
+   ```
+2. Visit **Site administration > Notifications** to complete the installation.
+
+### After installing
+
+1. Go to **Site administration > Plugins > Local plugins > kwtSMS**.
+2. Open the **Gateway** tab and log in with your kwtSMS API credentials.
 
 ## Configuration
 
